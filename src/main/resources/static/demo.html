@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>文件上传和密钥输入页面</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: normal;
+            margin-bottom: 20px;
+        }
+
+        form {
+            border: 1px solid #ddd;
+            padding: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="file"] {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+
+        .success {
+            color: green;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>文件上传和密钥输入页面</h1>
+    <form id="form">
+        <label for="file">选择文件：</label>
+        <input type="file" id="file" name="file" required>
+
+        <label for="key">输入密钥：</label>
+        <input type="text" id="key" name="key" required>
+
+        <button type="submit">获取文件</button>
+    </form>
+
+    <div id="message"></div>
+</div>
+
+<script>
+    // 获取表单元素和消息元素
+    const form = document.getElementById('form');
+    const fileInput = document.getElementById('file');
+    const keyInput = document.getElementById('key');
+    const message = document.getElementById('message');
+
+    // 监听表单提交事件
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        // 获取文件和密钥
+        const file = fileInput.files[0];
+        const key = keyInput.value;
+
+        // 创建 FormData 对象，将文件和密钥添加到其中
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('key', key);
+
+        // 发送 POST 请求
+        try {
+            const response = await fetch('/get-file', {
+                method: 'POST',
+                body: formData
+            });
+
+            // 如果响应状态码为 200，则显示成功消息，否则显示错误消息
+            if (response.ok) {
+                message.innerHTML = '文件获取成功！';
+                message.classList.add('success');
+            } else {
+                message.innerHTML = '文件获取失败。';
+                message.classList.add('error');
+            }
+        } catch (error) {
+            message.innerHTML = '发生错误：' + error.message;
+            message.classList.add('error');
+        }
+    });
+</script>
+</body>
