@@ -5,14 +5,18 @@ spring:
     name: SwiftSend
   datasource:
     druid:
-      driver-clasds-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/Mybatis?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
-      username: river
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://fubukiss.com:3306/swift?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+      username: swift
       password:
+
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
 
 mybatis-plus:
   configuration:
-    # 在映射实体或者属性时，将数据库中表名和字段名中的下划线去掉，按照驼峰命名法映射
     map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   global-config:
@@ -20,4 +24,4 @@ mybatis-plus:
       id-type: ASSIGN_ID
 
 swift:
-  path: /home/river/code/store
+  path: /home/river/code/store/
