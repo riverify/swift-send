@@ -14,7 +14,7 @@ formUpload.addEventListener('submit', (event) => {
     formData.append('file', inputUpload.files[0]);
 
     // 发送 AJAX 请求
-    fetch('/api/upload', {
+    fetch('/savedFiles/upload', {
         method: 'POST',
         body: formData
     })
@@ -33,7 +33,7 @@ formDownload.addEventListener('submit', (event) => {
     event.preventDefault(); // 阻止表单默认提交行为
 
     // 发送 AJAX 请求
-    fetch(`/api/download?key=${inputKey.value}`, {
+    fetch(`/savedFiles/download?key=${inputKey.value}`, {
         method: 'GET'
     })
         .then(response => response.json())
