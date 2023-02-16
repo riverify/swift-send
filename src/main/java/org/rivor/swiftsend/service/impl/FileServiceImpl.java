@@ -40,9 +40,8 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
         // 如果数据库中已经存在了这个密钥，则重新生成
         LambdaQueryWrapper<File> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(File::getFileCode, key);
-        while (this.count(wrapper) > 0) {
-            key = CodeUtils.generateValidateCode4String(4);
-        }
+        // todo: 2021/2/16 优化这里的逻辑，如果数据库中已经存在了这个密钥，则重新生成
+
         // 如果数据库中不存在这个密钥，则返回这个密钥
         log.info("The key is: {}", key);
         return key;
