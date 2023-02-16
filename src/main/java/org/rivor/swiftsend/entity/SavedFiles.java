@@ -1,5 +1,6 @@
 package org.rivor.swiftsend.entity;
 
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 
 /**
@@ -17,6 +18,7 @@ public class SavedFiles extends Model<SavedFiles> {
 
     private Integer fileCode;
 
+    @TableLogic(value = "0", delval = "1")
     private Integer isDeleted;
 
 
