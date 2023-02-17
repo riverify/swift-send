@@ -3,7 +3,7 @@ package org.rivor.swiftsend.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
-import org.rivor.swiftsend.entity.File;
+import org.rivor.swiftsend.entity.Files;
 import org.rivor.swiftsend.mapper.FileMapper;
 import org.rivor.swiftsend.service.FileService;
 import org.rivor.swiftsend.util.CodeUtils;
@@ -27,7 +27,7 @@ import java.util.UUID;
 @Service
 @Slf4j
 @EnableTransactionManagement
-public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements FileService {
+public class FileServiceImpl extends ServiceImpl<FileMapper, Files> implements FileService {
 
     @Value("${swift.path}")
     private String basePath;
@@ -38,9 +38,13 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
         // 在这里编写生成密钥的逻辑
         String key = CodeUtils.generateValidateCode4String(4);
         // 如果数据库中已经存在了这个密钥，则重新生成
-        LambdaQueryWrapper<File> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(File::getFileCode, key);
-        // todo: 2021/2/16 优化这里的逻辑，如果数据库中已经存在了这个密钥，则重新生成
+        LambdaQueryWrapper<Files> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Files::getFileCode, key);
+
+        while (this.getOne(wrapper) != null) {
+            key = CodeUtils.generateValidateCode4String(4);
+            wrapper.eq(Files::getFileCode, key);
+        }
 
         // 如果数据库中不存在这个密钥，则返回这个密钥
         log.info("The key is: {}", key);

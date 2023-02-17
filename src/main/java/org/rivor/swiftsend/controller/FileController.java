@@ -32,10 +32,11 @@ public class FileController {
     @PostMapping("/upload")
     public ResponseEntity<Map<String, String>> uploadFile(MultipartFile file) {
 
-        if (file.getSize() > 102400000L) {
+        if (file.getSize() > 104857600L) {  // 100MB
             Map<String, String> error = new HashMap<>();
             error.put("message", "File size must be less than 100MB");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+            log.debug("File size must be less than 100MB");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
         }
 
         try {

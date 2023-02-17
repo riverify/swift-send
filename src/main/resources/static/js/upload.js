@@ -5,9 +5,23 @@ const formDownload = document.querySelector('#form-download');
 const inputKey = document.querySelector('#key');
 const messageBox = document.querySelector('#message');
 
+// swal alert
+document.write('<link rel="stylesheet" type="text/css" href="http://www.huangwx.cn/css/sweetalert.css"></script>');
+document.write('<script type="text/javascript" src="http://www.huangwx.cn/js/sweetalert-dev.js"></script>');
 // 监听上传文件表单提交事件
 formUpload.addEventListener('submit', (event) => {
     event.preventDefault(); // 阻止表单默认提交行为
+
+    // make sure files are not too large
+    if (inputUpload.files.length > 0 && inputUpload.files[0].size > 104857600) {
+        // 文件超过了100MB的限制
+        swal('文件大小超过了100MB的限制，请重新选择！');
+        return;
+    }
+    // 在没有上传完全前请等待
+    messageBox.innerHTML = '正在上传，请稍后...';
+    // 禁用上传按钮
+    formUpload.querySelector('button').disabled = true;
 
     // 创建 FormData 对象，用于将表单数据序列化成键值对
     const formData = new FormData();
@@ -20,11 +34,21 @@ formUpload.addEventListener('submit', (event) => {
     })
         .then(response => response.json())
         .then(data => {
+            // 结束，启用上传按钮
+            formUpload.querySelector('button').disabled = false;
             // 显示密钥提示信息
-            messageBox.innerHTML = `上传成功，密钥为：${data.key}`;
+            if (data.key.length === 4) {
+                messageBox.innerHTML = `上传成功，密钥为：${data.key}`;
+                // 告知用户密钥
+                copyContent(data.key, 'textarea');
+                swal(`密钥：${data.key} 已复制到剪贴板，请妥善保存`);
+            } else {
+                messageBox.innerHTML = `上传失败`;
+                swal(`上传失败`)
+            }
         })
         .catch(error => {
-            messageBox.innerHTML = `上传失败：${error}`;
+            messageBox.innerHTML = `上传失败：${error.message}`;  // this I can not reach
         });
 });
 
@@ -48,3 +72,23 @@ formDownload.addEventListener('submit', (event) => {
             messageBox.innerHTML = `获取文件失败：${error}`;
         });
 });
+
+
+/**
+ * 复制内容
+ * @param {String} value 需要复制的内容
+ * @param {String} type 元素类型 input, textarea
+ */
+function copyContent(value, type = 'input') {
+    const input = document.createElement(type);
+    input.setAttribute('readonly', 'readonly'); // 设置为只读, 防止在 ios 下拉起键盘
+    // input.setAttribute('value', value); // textarea 不能用此方式赋值, 否则无法复制内容
+    input.value = value;
+    document.body.appendChild(input);
+    input.setSelectionRange(0, 9999); // 防止 ios 下没有全选内容而无法复制
+    input.select();
+    document.execCommand('copy');
+    document.body.removeChild(input);
+}
+
+

@@ -2,7 +2,7 @@ package org.rivor.swiftsend.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
-import org.rivor.swiftsend.entity.File;
+import org.rivor.swiftsend.entity.Files;
 
 /**
  * <p>Project: swift-send - FileMapper
@@ -13,6 +13,6 @@ import org.rivor.swiftsend.entity.File;
  * @since JDK8
  */
 @Mapper
-public interface FileMapper extends BaseMapper<File> {
+public interface FileMapper extends BaseMapper<Files> {
 
 }

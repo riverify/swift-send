@@ -14,7 +14,7 @@ import java.io.Serializable;
  * @since JDK8
  */
 @Data
-public class File implements Serializable {
+public class Files implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long fileId;

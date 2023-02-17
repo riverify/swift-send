@@ -1,7 +1,7 @@
 package org.rivor.swiftsend.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.rivor.swiftsend.entity.File;
+import org.rivor.swiftsend.entity.Files;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @version 1.0
  * @since JDK8
  */
-public interface FileService extends IService<File> {
+public interface FileService extends IService<Files> {
     String generateKey();
 
     void saveFile(String key, MultipartFile file);
