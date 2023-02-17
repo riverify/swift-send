@@ -56,21 +56,59 @@ formUpload.addEventListener('submit', (event) => {
 formDownload.addEventListener('submit', (event) => {
     event.preventDefault(); // 阻止表单默认提交行为
 
+    if (inputKey.value.length !== 4) {
+        swal('请输入正确的密钥');
+        messageBox.innerHTML = `请输入正确的密钥`;
+        return;
+    }
+
     // 发送 AJAX 请求
+    // fetch(`/file/download?key=${inputKey.value}`, {
+    //     method: 'GET'
+    // })
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         // 下载文件
+    //         const link = document.createElement('a');
+    //         link.href = data.url;
+    //         link.download = data.filename;
+    //         link.click();
+    //     })
+    //     .catch(error => {
+    //         messageBox.innerHTML = `获取文件失败：${error}`;
+    //     });
     fetch(`/file/download?key=${inputKey.value}`, {
         method: 'GET'
     })
-        .then(response => response.json())
-        .then(data => {
-            // 下载文件
-            const link = document.createElement('a');
-            link.href = data.url;
-            link.download = data.filename;
-            link.click();
+        .then(
+            response => {
+                if (response.ok) {
+                    return response;
+                } else {
+                    swal('获取文件失败，请检查密钥是否正确，或者文件已经被取走');
+                    messageBox.innerHTML = `获取文件失败，请检查密钥是否正确，或者文件已经被取走`;
+                    throw new Error('获取文件失败');
+                }
+            }
+        )
+        .then(response => response.blob())
+        .then(blob => {
+            // 创建 URL 对象
+            const url = URL.createObjectURL(blob);
+            // 创建 a 标签
+            const a = document.createElement('a');
+            // 设置 a 标签属性
+            a.href = url;
+            a.download = '';
+            // 触发点击事件
+            a.click();
+            // 释放 URL 对象
+            URL.revokeObjectURL(url);
+            swal('获取成功');
+            messageBox.innerHTML = `获取文件成功`;
         })
-        .catch(error => {
-            messageBox.innerHTML = `获取文件失败：${error}`;
-        });
+        .catch(error => console.error(error));
+
 });
 
 

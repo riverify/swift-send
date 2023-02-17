@@ -4,13 +4,20 @@ import lombok.extern.slf4j.Slf4j;
 import org.rivor.swiftsend.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,12 +62,37 @@ public class FileController {
         }
     }
 
-    @GetMapping("/get")
-    public ResponseEntity<Resource> getFile(@RequestParam("key") String key) {
-        // 在这里编写获取文件的逻辑
-        // 如果找到了对应的文件，则返回文件资源
+    @GetMapping("/download")
+    public ResponseEntity<Resource> getFile(String key) {
+        // 根据key获取文件
+        File file = fileService.getFile(key);
 
-        // 如果没有找到文件，则返回状态码404 Not Found
-        return null;
+        if (file == null) {
+            // 如果没有找到文件，则返回状态码404 Not Found
+            return ResponseEntity.notFound().build();
+        }
+
+        // 加载文件数据
+        ByteArrayResource resource = null;
+        HttpHeaders headers = null;
+
+        try {
+            Path path = file.toPath();
+            resource = new ByteArrayResource(Files.readAllBytes(path));
+
+            // 设置响应头
+            headers = new HttpHeaders();
+            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + file.getName());
+            headers.add(HttpHeaders.CONTENT_TYPE, Files.probeContentType(path));
+            headers.add(HttpHeaders.CONTENT_LENGTH, String.valueOf(file.length()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        // 返回响应实体
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(resource);
     }
 }

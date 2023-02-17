@@ -8,11 +8,14 @@ import org.rivor.swiftsend.mapper.FileMapper;
 import org.rivor.swiftsend.service.FileService;
 import org.rivor.swiftsend.util.CodeUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -79,5 +82,24 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, Files> implements F
         files.setIsDeleted(0);
         this.save(files);
 
+    }
+
+    @Override
+    @Transactional
+    public File getFile(String key) {
+
+        LambdaQueryWrapper<Files> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Files::getFileCode, key);
+        Files files = this.getOne(queryWrapper);
+        if (files == null) {
+            return null;
+        }
+
+        // 将文件的删除状态设置为已删除
+        this.remove(queryWrapper);
+        // 每当文件数量达到一定数量时，就删除文件夹中的文件
+
+
+        return new File(basePath + files.getFileName());
     }
 }
