@@ -32,6 +32,7 @@ public class FileController {
     @PostMapping("/upload")
     public ResponseEntity<Map<String, String>> uploadFile(MultipartFile file) {
 
+        // 如果文件过大，则返回错误信息
         if (file.getSize() > 104857600L) {  // 100MB
             Map<String, String> error = new HashMap<>();
             error.put("message", "File size must be less than 100MB");
@@ -40,7 +41,6 @@ public class FileController {
         }
 
         try {
-            // 如果文件过大，则返回错误信息
             // generateKey()方法会生成一个唯一的key
             String key = fileService.generateKey();
             Map<String, String> response = new HashMap<>();

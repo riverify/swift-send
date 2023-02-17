@@ -71,5 +71,13 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, Files> implements F
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        // 将文件信息存入数据库
+        Files files = new Files();
+        files.setFileCode(key);
+        files.setFileName(fileName);
+        files.setIsDeleted(0);
+        this.save(files);
+
     }
 }
