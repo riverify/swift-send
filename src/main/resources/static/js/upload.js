@@ -4,22 +4,23 @@ const inputUpload = document.querySelector('#file');
 const formDownload = document.querySelector('#form-download');
 const inputKey = document.querySelector('#key');
 const messageBox = document.querySelector('#message');
+const notification = document.getElementById('notification');
 
 // swal alert
-document.write('<link rel="stylesheet" type="text/css" href="http://www.huangwx.cn/css/sweetalert.css"></script>');
-document.write('<script type="text/javascript" src="http://www.huangwx.cn/js/sweetalert-dev.js"></script>');
+document.write('<link rel="stylesheet" type="text/css" href="../css/sweetalert.css"></script>');
+document.write('<script type="text/javascript" src="sweetalert-dev.js"></script>');
 // 监听上传文件表单提交事件
 formUpload.addEventListener('submit', (event) => {
     event.preventDefault(); // 阻止表单默认提交行为
 
     // make sure files are not too large
     if (inputUpload.files.length > 0 && inputUpload.files[0].size > 104857600) {
-        // 文件超过了100MB的限制
-        swal('文件大小超过了100MB的限制，请重新选择！');
+        // 文件超过了40MB的限制
+        swal('文件大小超过了50MB的限制，请重新选择！');
         return;
     }
     // 在没有上传完全前请等待
-    messageBox.innerHTML = '正在上传，请稍后...';
+    messageBox.innerHTML = '正在上传，根据文件大小程度和网络情况，这可能需要一点时间，请耐心等待......';
     // 禁用上传按钮
     formUpload.querySelector('button').disabled = true;
 
@@ -85,8 +86,8 @@ formDownload.addEventListener('submit', (event) => {
                 if (response.ok) {
                     return response;
                 } else {
-                    swal('获取文件失败，请检查密钥是否正确，或者文件已经被取走');
-                    messageBox.innerHTML = `获取文件失败，请检查密钥是否正确，或者文件已经被取走`;
+                    swal('获取文件失败，请检查密钥是否正确、文件已经被取走或已经失效');
+                    messageBox.innerHTML = `获取文件失败，请检查密钥是否正确、文件已经被取走或已经失效`;
                     throw new Error('获取文件失败');
                 }
             }
@@ -128,5 +129,4 @@ function copyContent(value, type = 'input') {
     document.execCommand('copy');
     document.body.removeChild(input);
 }
-
 

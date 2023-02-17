@@ -2,7 +2,6 @@ package org.rivor.swiftsend.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.rivor.swiftsend.entity.Files;
-import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;

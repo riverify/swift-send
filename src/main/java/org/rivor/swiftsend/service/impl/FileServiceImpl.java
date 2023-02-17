@@ -8,8 +8,6 @@ import org.rivor.swiftsend.mapper.FileMapper;
 import org.rivor.swiftsend.service.FileService;
 import org.rivor.swiftsend.util.CodeUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
@@ -97,8 +95,6 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, Files> implements F
 
         // 将文件的删除状态设置为已删除
         this.remove(queryWrapper);
-        // 每当文件数量达到一定数量时，就删除文件夹中的文件
-
 
         return new File(basePath + files.getFileName());
     }
