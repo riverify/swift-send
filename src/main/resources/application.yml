@@ -25,3 +25,4 @@ mybatis-plus:
 
 swift:
   path: /home/river/code/store/
+#  path: /www/wwwroot/swift-store

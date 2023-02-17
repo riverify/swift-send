@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -79,5 +80,22 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, Files> implements F
         files.setIsDeleted(0);
         this.save(files);
 
+    }
+
+    @Override
+    @Transactional
+    public File getFile(String key) {
+
+        LambdaQueryWrapper<Files> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Files::getFileCode, key);
+        Files files = this.getOne(queryWrapper);
+        if (files == null) {
+            return null;
+        }
+
+        // 将文件的删除状态设置为已删除
+        this.remove(queryWrapper);
+
+        return new File(basePath + files.getFileName());
     }
 }
