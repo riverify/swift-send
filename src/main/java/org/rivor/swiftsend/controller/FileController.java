@@ -3,19 +3,20 @@ package org.rivor.swiftsend.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.rivor.swiftsend.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MaxUploadSizeExceededException;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
@@ -64,6 +65,7 @@ public class FileController {
 
     @GetMapping("/download")
     public ResponseEntity<Resource> getFile(String key) {
+
         // 根据key获取文件
         File file = fileService.getFile(key);
 
@@ -80,15 +82,17 @@ public class FileController {
             Path path = file.toPath();
             resource = new ByteArrayResource(Files.readAllBytes(path));
 
+            // 使用URLEncoder.encode()方法对文件名进行编码
+            String encodedFilename = URLEncoder.encode(file.getName(), "UTF-8").replaceAll("\\+", "%20");
+
             // 设置响应头
             headers = new HttpHeaders();
-            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + file.getName());
+            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + encodedFilename + "\"");
             headers.add(HttpHeaders.CONTENT_TYPE, Files.probeContentType(path));
             headers.add(HttpHeaders.CONTENT_LENGTH, String.valueOf(file.length()));
         } catch (IOException e) {
             e.printStackTrace();
         }
-
 
         // 返回响应实体
         return ResponseEntity.ok()
