@@ -20,6 +20,15 @@ formUpload.addEventListener('submit', (event) => {
     }
     // 在没有上传完全前请等待
     messageBox.innerHTML = '正在上传，根据文件大小程度和网络情况，这可能需要一点时间，请耐心等待......';
+    // 弹出不可关闭的提示框
+    swal({
+        title: '正在上传',
+        text: '根据文件大小程度和网络情况，这可能需要一点时间，请耐心等待......',
+        icon: 'info',
+        buttons: false,
+        closeOnClickOutside: false,
+        closeOnEsc: false
+    });
     // 禁用上传按钮
     formUpload.querySelector('button').disabled = true;
 
@@ -103,7 +112,7 @@ formDownload.addEventListener('submit', (event) => {
                     // 结束，启用下载按钮
                     formDownload.querySelector('button').disabled = false;
                     // 关闭下载中的提示框
-                    swal.close();
+                    // swal.close();
 
                     swal('获取文件失败，请检查密钥是否正确、文件已经被取走或已经失效');
                     messageBox.innerHTML = `获取文件失败，请检查密钥是否正确、文件已经被取走或已经失效`;
@@ -131,8 +140,8 @@ formDownload.addEventListener('submit', (event) => {
             // 释放 URL 对象
             URL.revokeObjectURL(url);
             // 关闭下载中的提示框
-            swal.close();
-            swal('获取成功');
+            // swal.close();
+            swal('获取成功，请查看下载器');
             messageBox.innerHTML = `获取文件成功`;
             // 结束，启用下载按钮
             formDownload.querySelector('button').disabled = false;
