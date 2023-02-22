@@ -25,7 +25,7 @@ formUpload.addEventListener('submit', (event) => {
         title: '正在上传',
         text: '根据文件大小程度和网络情况，这可能需要一点时间，请耐心等待......',
         icon: 'info',
-        buttons: false,
+        confirmButtonColor: '#0D6EFD',
         closeOnClickOutside: false,
         closeOnEsc: false
     });
@@ -48,9 +48,13 @@ formUpload.addEventListener('submit', (event) => {
             // 显示密钥提示信息
             if (data.key.length === 4) {
                 messageBox.innerHTML = `上传成功，密钥为：${data.key}`;
-                // 告知用户密钥
+                // 告知用户密钥已经复制到剪贴板
                 copyContent(data.key, 'textarea');
-                swal(`密钥：${data.key} 已复制到剪贴板，请妥善保存`);
+                swal({
+                    title: '上传成功',
+                    text: `密钥为：${data.key}，已复制到剪贴板`,
+                    confirmButtonColor: '#0D6EFD',
+                });
             } else {
                 messageBox.innerHTML = `上传失败`;
                 swal(`上传失败`)
@@ -66,7 +70,10 @@ formDownload.addEventListener('submit', (event) => {
     event.preventDefault(); // 阻止表单默认提交行为
 
     if (inputKey.value.length !== 4) {
-        swal('请输入正确的密钥');
+        swal({
+            title: '请输入正确的密钥',
+            confirmButtonColor: '#0D6EFD',
+        });
         messageBox.innerHTML = `请输入正确的密钥`;
         return;
     }
@@ -80,8 +87,10 @@ formDownload.addEventListener('submit', (event) => {
         title: '正在获取文件',
         text: '请耐心等待......',
         icon: 'info',
-        buttons: false,
+        confirmButtonColor: '#0D6EFD',
         closeOnClickOutside: false,
+        allowOutsideClick: false,
+        disableButtons: true,
         closeOnEsc: false
     });
 
@@ -114,7 +123,11 @@ formDownload.addEventListener('submit', (event) => {
                     // 关闭下载中的提示框
                     // swal.close();
 
-                    swal('获取文件失败，请检查密钥是否正确、文件已经被取走或已经失效');
+                    swal({
+                        title: '获取文件失败',
+                        text: '请检查密钥是否正确、文件已经被取走或已经失效',
+                        confirmButtonColor: '#0D6EFD',
+                    });
                     messageBox.innerHTML = `获取文件失败，请检查密钥是否正确、文件已经被取走或已经失效`;
                     throw new Error('获取文件失败');
                 }
@@ -141,7 +154,10 @@ formDownload.addEventListener('submit', (event) => {
             URL.revokeObjectURL(url);
             // 关闭下载中的提示框
             // swal.close();
-            swal('获取成功，请查看下载器');
+            swal({
+                title: '获取文件成功，文件已经下载到本地',
+                confirmButtonColor: '#0D6EFD'
+            });
             messageBox.innerHTML = `获取文件成功`;
             // 结束，启用下载按钮
             formDownload.querySelector('button').disabled = false;
