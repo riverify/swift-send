@@ -16,6 +16,7 @@ public class SwiftSendApplication {
     public static void main(String[] args) {
         SpringApplication.run(SwiftSendApplication.class, args);
         log.info("Start server successfully！");
+        log.info("localhost:8080");
     }
 
 }

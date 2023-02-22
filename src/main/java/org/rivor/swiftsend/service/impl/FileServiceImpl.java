@@ -15,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.UUID;
 
 /**
  * <p>Project: swift-send - FileServiceImpl
@@ -59,8 +58,12 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, Files> implements F
         // 获取文件后缀
         assert originalFilename != null;
         String suffix = originalFilename.substring(originalFilename.lastIndexOf("."));
-        // 使用UUID生成文件名
-        String fileName = UUID.randomUUID() + suffix;
+        // 使用“原文件名(无文件后缀)” + "密钥号" + "文件后缀"的方式生成文件名
+//        // 生成时间yyyy-MM-dd
+//        Date date = new Date();
+//        String dateStr = new java.text.SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(date);
+        // 生成文件名
+        String fileName = originalFilename.substring(0, originalFilename.lastIndexOf(".")) + "_" + key + suffix;
         // 创建一个目录，判断是否存在，不存在则创建
         java.io.File dir = new java.io.File(basePath);
         if (!dir.exists()) {
