@@ -15,7 +15,10 @@ formUpload.addEventListener('submit', (event) => {
     // make sure files are not too large
     if (inputUpload.files.length > 0 && inputUpload.files[0].size > 52428800) {
         // 文件超过了40MB的限制
-        swal('文件大小超过了50MB的限制，请重新选择！');
+        swal({
+            title: '文件超过了50MB的限制',
+            confirmButtonColor: '#0D6EFD',
+        });
         return;
     }
     // 在没有上传完全前请等待
