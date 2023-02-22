@@ -130,7 +130,7 @@ IDEA，Maven依赖就会自动下载了。
 
 即可完成打包，云服务器部署请自行利用互联网搜索。
 
-[示例网站](fubukiss.com)
+[示例网站](https://fubukiss.com)
 
 <!-- USAGE EXAMPLES -->
 
