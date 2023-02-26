@@ -40,7 +40,7 @@ public class AutoCleanUp {
                 for (File file : files) {
                     long lastModified = file.lastModified();
                     long currentTime = System.currentTimeMillis();
-                    if (currentTime - lastModified > 24 * 60 * 60 * 1000) { // 2 hours
+                    if (currentTime - lastModified > 24 * 60 * 60 * 1000) { // 24 hours
                         log.info("Deleting expired file: {}", file.getName());
                         if (file.delete()) {
                             log.info("Deleted file: {}", file.getName());
