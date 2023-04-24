@@ -17,14 +17,17 @@
 
         body {
             padding: 20px;
-            background-image: url("static/image/tiananmen.png");
+            background-image: url("/image/tiananmen.png");
+            background-size: cover;
+            background-repeat: no-repeat;
+            backdrop-filter: blur(6px);
+            background-position: center;
         }
 
         .container {
             max-width: 600px;
             margin: 0 auto;
             padding: 20px;
-            background: url("https://cdn.jsdelivr.net/gh/zhengxiaoyao0716/cdn-assets/2021-10-21-16-27-00.png") no-repeat;
         }
 
         .container_wider {
@@ -52,24 +55,76 @@
             margin-right: 10px;
         }
 
+        .title_font {
+            font-family: gofont, serif;
+            font-size: 50px;
+            color: gold;
+            /* 居中 */
+            text-align: center;
+            
+        }
+        @font-face {
+            font-family: 'gofont';
+            src: url("gofont.ttf");
+        }
+
+        /* nav */
+        .container_red {
+            position: relative;
+            height: 50px;
+            width: 120%;
+            max-width: 100%;
+            margin: auto;
+            overflow: hidden;
+            background-color: red;
+            font-size: 40px;
+        }
+
+        .container_red .scroll-list {
+            position: absolute;
+            left: 0;
+            height: 100%;
+            animation: scroll-left 20s linear infinite normal;
+        }
+
+        .container_red .scroll-list span + span {
+            padding-left: 10em;
+        }
+
+        @keyframes scroll-left {
+            100% {
+                left: -52em;
+            }
+        }
 
     </style>
 
 </head>
 <body>
 
-<div class="container">
-    <h2 class="mb-4">Swift Send</h2>
-    <h5 class="mb-4">丝滑妙送 简洁好用的文件中转站</h5>
+<div class="container_red">
+    <div class="scroll-list">
+        <span>人民就是江山，共产党打江山、守江山。</span>
+        <span>在人民面前，我们永远是小学生。</span>
+        <span>与腐败作斗争，个人生死，个人毁誉，无所谓。既然党和国家的前途命运交给了我们，就要担当起这个责任</span>
+        <span>中国共产党人的初心和使命，就是为中国人民谋幸福，为中华民族谋复兴。</span>
+        <span>中国特色社会主义法治道路，是社会主义法治建设成就和经验的集中体现，是建设社会主义法治国家的唯一正确道路。在走什么样的法治道路问题上，必须向全社会释放正确而明确的信号，指明全面推进依法治国的正确方向，统一全党全国各族人民认识和行动。</span>
+        <span>中国特色社会主义是社会主义而不是其他什么主义，科学社会主义基本原则不能丢，丢了就不是社会主义。我们党始终强调，中国特色社会主义，既坚持了科学社会主义基本原则，又根据时代条件赋予其鲜明的中国特色。这就是说，一个国家实行什么样的主义，关键要看这个主义能否解决这个国家面临的历史性课题。……是马克思列宁主义、毛泽东思想引导中国人民走出了漫漫长夜、建立了新中国，是中国特色社会主义使中国快速发展起来了。……历史和现实都告诉我们，只有社会主义才能救中国，只有中国特色社会主义才能发展中国，这是历史的结论、人民的选择。</span>
+    </div>
 </div>
 
-<div id="github">
-    <a href="https://github.com/riverify" target="_blank">
-        <img src="https://github.com/riverify.png" alt="To author's Github"/>
-    </a>
+<div class="container">
+    <h2 class="mb-4 title_font" style="color: red">东风快送</h2>
+    <h5 class="mb-4 title_font" style="color: red">在党的引导下诞生</h5>
+    <h5 class="mb-4 title_font" style="color: red">不断奋进中的</h5>
+    <h5 class="mb-4 title_font" style="color: red">具有伟大历史背景意义的</h5>
+    <h5 class="mb-4 title_font" style="color: red">文件中转站</h5>
+    <h5 class="mb-4 title_font" style="color: red"></h5>
+
 </div>
 
-<div class="container">
+
+<div class="container blur">
 
     <div class="container">
         <div class="form-check form-check-inline">
@@ -82,8 +137,8 @@
         </div>
     </div>
 
-
     <div id="fileTransform" style="display: block;">
+
 
         <div style="margin-top: 10px">
             <h5 class="mb-4">请存入小于50M的文件</h5>
@@ -138,6 +193,25 @@
         <div id="message" class="mt-4"></div>
 
     </div>
+
+    <div>
+        <div class="title_font">
+            盛世中华！绝美华夏！
+        </div>
+        <div style="position: relative; padding: 30% 45%;">
+            <iframe style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;" src="//player.bilibili.com/player.html?bvid=BV19E41197Kc&page=1&high_quality=1&danmaku=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+        </div>
+    </div>
+
+    <div>
+        <div class="title_font" style="font-size: 50px">
+            百年以来，不断前行，人民当家作主，是全体共产党人的伟大初心！
+        </div>
+        <div style="position: relative; padding: 30% 45%;">
+            <iframe style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;" src="//player.bilibili.com/player.html?bvid=BV1KW4y1E7LE&page=1&high_quality=1&danmaku=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+        </div>
+    </div>
+
 
     <!-- 引入 Bootstrap 的 JavaScript 文件 -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
