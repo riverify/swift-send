@@ -118,80 +118,14 @@
     <h5 class="mb-4 title_font" style="color: red">在党的引导下</h5>
     <h5 class="mb-4 title_font" style="color: red">不断奋进中的</h5>
     <h5 class="mb-4 title_font" style="color: red">多端互传文件中转站</h5>
-    <h5 class="mb-4 title_font" style="color: red"></h5>
+    <h5 class="mb-4 title_font" style="color: red"><a href="transform.html" class="btn btn-primary btn-lg btn-block" style="align-content: center">开始互传</a></h5>
 
 </div>
 
 
 <div class="container blur">
 
-    <div class="container">
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="radioOption" id="fileType" value="fileType" checked>
-            <label class="form-check-label" for="fileType">文件传输</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="radioOption" id="sentenceType" value="sentenceType">
-            <label class="form-check-label" for="sentenceType">文字传输</label>
-        </div>
-    </div>
 
-    <div id="fileTransform" style="display: block;">
-
-
-        <div style="margin-top: 10px">
-            <h5 class="mb-4">请存入小于50M的文件</h5>
-            <form id="form-upload">
-                <div class="mb-4">
-                    <input type="file" class="form-control" id="file" name="file" required max="52428800">
-                </div>
-                <button type="submit" class="btn btn-primary">上传文件</button>
-            </form>
-        </div>
-
-        <div style="margin-top: 40px">
-            <form id="form-download">
-                <div class="mb-4">
-                    <h5 class="mb-4">输入密钥以获得文件</h5>
-                    <input type="text" class="form-control" id="key" name="key" required>
-                </div>
-                <button type="submit" class="btn btn-primary">获取文件</button>
-            </form>
-        </div>
-
-    </div>
-
-    <div id="sentenceTransform" style="display: none;">
-        <div style="margin-top: 30px">
-            <h5 class="mb-4">请输入要中转的文字</h5>
-            <form id="form-upload_sentence" onclick="upLoadSentence()"> <!-- todo:文字中转 -->
-                <div class="mb-4">
-                    <textarea type="text" class="form-control" id="content_sentence" name="content_sentence" rows="6"
-                              required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">上传文字</button>
-            </form>
-
-        </div>
-
-        <div style="margin-top: 50px">
-            <form id="form-download_sentence">
-                <div class="mb-4">
-                    <h5 class="mb-4">输入密钥以获得文字</h5>
-                    <input type="text" class="form-control" id="key_sentence" name="key_sentence" required>
-                </div>
-                <button type="submit" class="btn btn-primary">获取文字</button>
-            </form>
-
-        </div>
-
-    </div>
-
-    <div style="margin-top: 50px">
-        <!-- 生成的密钥，可以方便的复制 -->
-        <div id="message" class="mt-4"></div>
-
-    </div>
 
     <div>
         <div class="title_font">
